@@ -16,7 +16,11 @@ within Homer:
 + [Prometheus](#prometheus)
 + [AdGuard Home](#adguard-home)
 + [Portainer](#portainer)
-+ [Emby](#emby)
++ [Emby / Jellyfin](#emby--jellyfin)
++ [Uptime Kuma](#uptime-kuma)
++ [Tautulli](#tautulli)
++ [Mealie](#mealie)
++ [Healthchecks](#healthchecks)
 
 If you experiencing any issue, please have a look to the [troubleshooting](troubleshooting.md) page.
 
@@ -167,7 +171,7 @@ See https://docs.portainer.io/v/ce-2.11/user/account-settings#access-tokens
   #   - "local"
 ```
 
-## Emby
+## Emby / Jellyfin
 
 You need to set the type to Emby, provide an api key and choose which stats to show if the subtitle is disabled.
 
@@ -194,3 +198,48 @@ The following configuration is available for the UptimeKuma service. Needs v1.13
   slug: "myCustomDashboard" # Defaults to "default" if not provided.
   type: "UptimeKuma"
 ```
+
+## Tautulli
+
+The Tautulli service can allow you to show the number of currently active
+streams on you Plex instance. An API key is required, and can be obtained from
+the "Web Interface" section of settings on the Tautulli web UI.
+
+```yaml
+- name: "Tautulli"
+  logo: "assets/tools/sample.png"
+  url: "http://192.168.0.151:8181"
+  type: "Tautulli"
+  apikey: "MY-SUPER-SECRET-API-KEY"
+```
+
+Because the service type and link don't necessarily have to match, you could
+even make the service type Tautulli on your Plex card and provide a separate
+endpoint pointing to Tautulli!
+
+```yaml
+- name: "Plex"
+  logo: "assets/tools/sample.png"
+  url: "http://192.168.0.151:32400/web" # Plex
+  endpoint: "http://192.168.0.151:8181" # Tautulli
+  type: "Tautulli"
+  apikey: "MY-SUPER-SECRET-API-KEY"
+```
+
+## Mealie
+
+First off make sure to remove an existing `subtitle` as it will take precedence if set. 
+Setting `type: "Mealie"` will then show the number of recipes Mealie is keeping organized or the planned meal for today if one is planned. You will have to set an API key in the field `apikey` which can be created in your Mealie installation.
+
+## Healthchecks
+
+This service displays information about the configured status checks from the Healthchecks application.
+Two lines are needed in the config.yml :
+
+```yaml
+  type: "Healthchecks"
+  apikey: "01234deb70424befb1f4ef6a23456789"
+```
+
+The url must be the root url of the Healthchecks application.
+The Healthchecks API key can be found in Settings > API Access > API key (read-only). The key is needed to access Healthchecks API.
