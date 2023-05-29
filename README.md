@@ -10,7 +10,9 @@
 <h4 align="center">
  A dead simple static <strong>HOM</strong>epage for your serv<strong>ER</strong> to keep your services on hand, from a simple <code>yaml</code> configuration file.
 </h4>
-
+<p align="center"> 
+  <a href="https://www.buymeacoffee.com/bastien" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-yellow.png" alt="Buy Me A Coffee" height="41" width="174"></a>
+<p>
 <p align="center">
  <strong>
    <a href="https://homer-demo.netlify.app">Demo</a>
@@ -117,6 +119,23 @@ unzip homer.zip
 cd homer
 cp assets/config.yml.dist assets/config.yml
 npx serve # or python -m http.server 8010 or apache, nginx ...
+```
+
+### Using Helm
+
+Thanks to [@djjudas21](https://github.com/djjudas21) [charts](https://github.com/djjudas21/charts/tree/main/charts/homer):
+
+```sh
+helm repo add djjudas21 https://djjudas21.github.io/charts/
+helm repo update djjudas21
+
+# install with all defaults
+helm install homer djjudas21/homer
+
+# install with customisations
+wget https://raw.githubusercontent.com/djjudas21/charts/main/charts/homer/values.yaml
+# edit values.yaml
+helm install homer djjudas21/homer -f values.yaml
 ```
 
 ### Build manually
