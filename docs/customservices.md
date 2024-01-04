@@ -33,6 +33,8 @@ within Homer:
   - [SABnzbd](#sabnzbd)
   - [OctoPrint](#octoprint)
   - [Tdarr](#tdarr)
+  - [PiAlert](#pialert)
+  - [Immich](#immich)
 
 If you experiencing any issue, please have a look to the [troubleshooting](troubleshooting.md) page.
 
@@ -96,9 +98,10 @@ Two lines are needed in the config.yml :
 The url must be the root url of Medusa application.
 The Medusa API key can be found in General configuration > Interface. It is needed to access Medusa API.
 
-## Lidarr, Prowlarr, Sonarr and Radarr
+## Lidarr, Prowlarr, Sonarr, Readarr and Radarr
 
-This service displays Activity (blue), Warning (orange) or Error (red) notifications bubbles from the Lidarr, Radarr or Sonarr application.
+This service displays Activity (blue), Warning (orange) or Error (red) notifications bubbles from the Lidarr, Readarr, Radarr or Sonarr application.
+Readarr display also a Missing (purple) notification bubbles.
 Two lines are needed in the config.yml :
 
 ```yaml
@@ -106,8 +109,8 @@ Two lines are needed in the config.yml :
   apikey: "<---insert-api-key-here--->"
 ```
 
-The url must be the root url of Lidarr, Prowlarr, Radarr or Sonarr application.
-The Lidarr, Prowlarr, Radarr or Sonarr API key can be found in Settings > General. It is needed to access the API.
+The url must be the root url of Lidarr, Prowlarr, Readarr, Radarr or Sonarr application.
+The Lidarr, Prowlarr, Readarr, Radarr or Sonarr API key can be found in Settings > General. It is needed to access the API.
 If you are using an older version of Radarr or Sonarr which don't support the new V3 api endpoints, add the following line to your service config "legacyApi: true", example:
 
 ```yaml
@@ -174,7 +177,7 @@ In order to use it, you must be using Portainer version 1.11 or later. Generate 
 it to the apikey field.
 By default, every connected environments will be checked. To select specific ones, add an "environments" entry which can be a simple string or an array containing all the selected environments name.
 
-See https://docs.portainer.io/v/ce-2.11/user/account-settings#access-tokens
+See https://docs.portainer.io/api/access#creating-an-access-token
 
 ```yaml
 - name: "Portainer"
@@ -353,7 +356,17 @@ Configuration example:
 
 ## SpeedtestTracker
 
-For the SpeedtestTracker service you just need to define a entry with type `SpeedtestTracker`.
+This service will show the download and upload speeds in Mbit/s and the ping in ms.
+To configure the service, you need to define the url of SpeedtestTracker running and an entry with type `SpeedtestTracker`.
+
+Configuration example:
+
+```yaml
+- name: "Speedtest Tracker"
+  type: "SpeedtestTracker"
+  url: "http://192.168.0.1:8080"
+  target: "_blank"
+```
 
 ## What's up Docker
 
@@ -410,4 +423,25 @@ for transcoding on your Tdarr instance as well as the number of errored items.
   url: "http://192.168.0.151:8265"
   type: "Tdarr"
   checkInterval: 5000 # (Optional) Interval (in ms) for updating the queue & error counts
+```
+
+## PiAlert
+
+The PiAlert service displays stats from your PiAlert server.
+
+```yaml
+- name: "PiAlert"
+  type: "PiAlert"
+  updateInterval: 5000 # (Optional) Interval (in ms) for updating the stats
+```
+
+## Immich
+
+The Immich service displays stats from your Immich server.
+
+```yaml
+- name: "Immich"
+  type: "Immich"
+  apikey: "<--- Your api key --->" # administrator user
+  updateInterval: 5000 # (Optional) Interval (in ms) for updating the stats
 ```
