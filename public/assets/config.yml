@@ -131,4 +131,18 @@ services:
         icon: "fas fa-tachometer-alt"
         url: "https://portal.rockgympro.com/portal/public/d0f355e237dda999f3112d94d3c762c7/occupancy?&iframeid=occupancyCounter&fId="
         target: "_blank" # optional html a tag target attribute
-
+  - name: "General Election 2024"
+    icon: "fas fa-xmark-to-slot"
+    items:
+      - name: "The Economist Forecast"
+        icon: "fas fa-chart-mixed"
+        url: "https://www.economist.com/interactive/uk-general-election/forecast"
+        target: "_blank" # optional html a tag target attribute
+      - name: "Election Pooling"
+        icon: "fas fa-poll-people"
+        url: "https://www.electionpolling.co.uk/polls/general-election"
+        target: "_blank" # optional html a tag target attribute
+      - name: "BBC News Election"
+        icon: "fas fa-newspaper"
+        url: "https://www.bbc.co.uk/news/topics/crggn4j2lm0t"
+        target: "_blank" # optional html a tag target attribute
