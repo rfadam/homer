@@ -5,11 +5,11 @@
     :class="[
       `theme-${config.theme}`,
       `page-${currentPage}`,
-      isDark ? 'is-dark' : 'is-light',
+      isDark ? 'dark' : 'light',
       !config.footer ? 'no-footer' : '',
     ]"
   >
-    <DynamicTheme :themes="config.colors" />
+    <DynamicTheme v-if="config.colors" :themes="config.colors" />
     <div id="bighead">
       <section v-if="config.header" class="first-line">
         <div v-cloak class="container">
@@ -19,10 +19,7 @@
             </a>
             <i v-if="config.icon" :class="config.icon"></i>
           </div>
-          <div
-            class="dashboard-title"
-            :class="{ 'no-logo': !config.icon || !config.logo }"
-          >
+          <div class="dashboard-title">
             <span class="headline">{{ config.subtitle }}</span>
             <h1>{{ config.title }}</h1>
           </div>
@@ -52,7 +49,7 @@
           :hotkey="searchHotkey()"
           @input="filterServices($event)"
           @search-focus="showMenu = true"
-          @search-open="navigateToFirstService($event?.target?.value)"
+          @search-open="navigateToFirstService"
           @search-cancel="filterServices()"
         />
       </Navbar>
@@ -77,6 +74,7 @@
               <h2
                 v-if="group.name"
                 class="column is-full group-title"
+                :class="group.class"
                 :key="`header-${groupIndex}`"
               >
                 <i v-if="group.icon" :class="['fa-fw', group.icon]"></i>
@@ -92,7 +90,11 @@
                 :key="`service-${groupIndex}-${index}`"
                 :item="item"
                 :proxy="config.proxy"
-                :class="['column', `is-${12 / config.columns}`]"
+                :class="[
+                  'column',
+                  `is-${12 / config.columns}`,
+                  `${item.class || group.class || ''}`,
+                ]"
               />
             </template>
           </div>
@@ -107,7 +109,7 @@
               v-for="(group, groupIndex) in services"
               :key="groupIndex"
             >
-              <h2 v-if="group.name" class="group-title">
+              <h2 v-if="group.name" class="group-title" :class="group.class">
                 <i v-if="group.icon" :class="['fa-fw', group.icon]"></i>
                 <div v-else-if="group.logo" class="group-logo media-left">
                   <figure class="image is-48x48">
@@ -121,6 +123,7 @@
                 :key="index"
                 :item="item"
                 :proxy="config.proxy"
+                :class="item.class || group.class"
               />
             </div>
           </div>
@@ -273,11 +276,10 @@ export default {
         const service = this.services[0].items[0];
         window.open(service.url, target || service.target || "_self");
       } catch (error) {
-        console.warning("fail to open service");
+        console.warn("fail to open service");
       }
     },
     filterServices: function (filter) {
-      console.log(filter);
       this.filter = filter;
 
       if (!filter) {

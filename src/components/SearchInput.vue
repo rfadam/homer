@@ -1,15 +1,19 @@
 <template>
-  <div class="search-bar">
-    <label for="search" class="search-label"></label>
-    <input
-      type="text"
-      ref="search"
-      :value="value"
-      @input.stop="search($event.target.value)"
-      @keyup.enter.exact="open()"
-      @keyup.alt.enter="open('_blank')"
-    />
-  </div>
+  <search class="search-bar">
+    <form role="search">
+      <label for="search" class="search-label"></label>
+      <input
+        id="search"
+        name="search"
+        type="search"
+        ref="search"
+        :value="value"
+        @input.stop="search($event.target.value)"
+        @keydown.enter.exact.prevent="open()"
+        @keydown.alt.enter.prevent="open('_blank')"
+      />
+    </form>
+  </search>
 </template>
 
 <script>
